@@ -1,0 +1,31 @@
+version: '3'
+
+volumes:
+  postgres_data:
+  es_data:
+
+services:
+  db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  backend:
+    build: ./task_manager/
+    env_file: .env
+    ports:
+      - "8000:8000"
+  flower:
+    build: ./task_manager/
+    command: celery -A task_manager flower
+    ports:
+      - "5555:5555"
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+  celery:
+    build: ./task_manager/
+    command: celery -A task_manager worker --loglevel=info
