@@ -1,12 +1,26 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
+from django_elasticsearch_dsl_drf.viewsets import DocumentViewSet
+from django_elasticsearch_dsl_drf.filter_backends import SearchFilterBackend
 
 from tasks.tasks import process_task
 from tasks.models import Task
 from .serializers import TaskSerializer
 from .paginations import ApiPagination
+from .documents import TaskDocument
+from .serializers import TaskDocumentSerializer
 
+
+class TaskDocumentViewSet(DocumentViewSet):
+    document = TaskDocument
+    serializer_class = TaskDocumentSerializer
+
+    filter_backends = [
+        SearchFilterBackend
+    ]
+    search_fields = ('title',
+                     'description')
 
 
 class TaskViewSet(viewsets.ModelViewSet):

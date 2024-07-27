@@ -29,3 +29,11 @@ services:
   celery:
     build: ./task_manager/
     command: celery -A task_manager worker --loglevel=info
+  elasticsearch:
+    image: elasticsearch:7.14.0
+    volumes:
+      - ./data/elastic:/var/lib/elasticsearch/data
+    environment:
+      - discovery.type=single-node
+    ports:
+      - 9200:9200

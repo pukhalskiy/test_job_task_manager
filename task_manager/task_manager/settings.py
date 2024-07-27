@@ -32,6 +32,8 @@ INSTALLED_APPS = [
     'api',
     'tasks',
     'django_celery_results',
+    'django_elasticsearch_dsl',
+    'django_elasticsearch_dsl_drf',
 ]
 
 MIDDLEWARE = [
@@ -133,3 +135,16 @@ CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'UTC'
+
+
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': 'elasticsearch:9200',
+        'http_auth': ('username', 'password'),
+    },
+}
+
+
+ELASTICSEARCH_INDEX_NAMES = {
+    'tasks.task': 'tasks',
+}

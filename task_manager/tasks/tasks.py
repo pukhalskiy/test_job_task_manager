@@ -11,7 +11,7 @@ def process_task(task_id):
         task = Task.objects.get(id=task_id)
         task.status = 'in_progress'
         task.save()
-        time.sleep(100)
+        time.sleep(10)
         task.status = 'completed'
         task.save()
     except Task.DoesNotExist:
