@@ -14,18 +14,7 @@ from .serializers import TaskDocumentSerializer
 
 class TaskDocumentViewSet(DocumentViewSet):
     """
-    Представление для модели Task с использованием Django REST Framework.
-    Методы:
-        update: Частичное обновление существующего объекта Task. Проверяет
-            данные на валидность и сохраняет обновленный объект.
-        destroy: Удаление существующего объекта Task. После удаления возвращает
-            статус HTTP 204 (Нет содержимого).
-        all_tasks: Возвращает список всех задач. Использует метод GET и
-            сериализует список задач в формат JSON.
-        perform_create: Создает новый объект Task. После создания задачи
-            вызывает задачу в фоне для обработки через Celery.
-        complete: Обновляет статус задачи на 'completed'. Использует метод POST
-            и принимает идентификатор задачи в качестве параметра.
+    Вьюсет модели документа Elasticsearch.
     """
     document = TaskDocument
     serializer_class = TaskDocumentSerializer
@@ -38,6 +27,20 @@ class TaskDocumentViewSet(DocumentViewSet):
 
 
 class TaskViewSet(viewsets.ModelViewSet):
+    """
+    Вьюсет модели Task.
+    Методы:
+        update: Частичное обновление существующего объекта Task. Проверяет
+            данные на валидность и сохраняет обновленный объект.
+        destroy: Удаление существующего объекта Task. После удаления возвращает
+            статус HTTP 204 (Нет содержимого).
+        all_tasks: Возвращает список всех задач. Использует метод GET и
+            сериализует список задач в формат JSON.
+        perform_create: Создает новый объект Task. После создания задачи
+            вызывает задачу в фоне для обработки через Celery.
+        complete: Обновляет статус задачи на 'completed'. Использует метод POST
+            и принимает идентификатор задачи в качестве параметра.
+    """
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
     pagination_class = ApiPagination
