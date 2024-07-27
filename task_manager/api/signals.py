@@ -6,6 +6,10 @@ from django_elasticsearch_dsl.registries import registry
 
 @receiver(post_save)
 def update_document(sender, **kwargs):
+    """
+    Обработчик сигнала post_save для обновления документа Elasticsearch
+    при сохранении объекта модели.
+    """
     app_label = sender._meta.app_label
     model_name = sender._meta.model_name
     instance = kwargs['instance']
@@ -19,6 +23,10 @@ def update_document(sender, **kwargs):
 
 @receiver(post_delete)
 def delete_document(sender, **kwargs):
+    """
+    Обработчик сигнала post_delete для удаления документа Elasticsearch
+    при удалении объекта модели.
+    """
     app_label = sender._meta.app_label
     model_name = sender._meta.model_name
     instance = kwargs['instance']
